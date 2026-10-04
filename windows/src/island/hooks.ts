@@ -25,6 +25,7 @@ interface HookPayload {
   tool_input?: Record<string, unknown>;
   /** Optional agent tag: lowercase, digits and hyphens, ≤ 24 chars. */
   coucou_agent?: string;
+  zem_agent?: string;
 }
 
 /** Same rule as HookServer.validateAgent on macOS. "claude" is reserved. */
@@ -156,7 +157,7 @@ function handleHook(island: Island, payload: HookPayload) {
 
   // Route to the right pill. Valid coucou_agent → dynamic "agent_<name>" pill.
   // "claude" is reserved; absent or invalid → Claude Code pill unchanged.
-  const validAgent = validateAgent(payload.coucou_agent);
+  const validAgent = validateAgent(payload.zem_agent || payload.coucou_agent);
   const agentId = validAgent ? `agent_${validAgent}` : CLAUDE_ID;
   const isExternalAgent = validAgent !== null;
 
@@ -312,7 +313,7 @@ function handleHook(island: Island, payload: HookPayload) {
         State.setPillBadge(CLAUDE_ID, "approval");
         island.reveal();
       }
-      // Coucou answers within 108 s or not at all; after that the terminal has
+      // Zem answers within 108 s or not at all; after that the terminal has
       // taken over and the card would be lying.
       pendingTimeout = window.setTimeout(() => {
         pendingTimeout = null;

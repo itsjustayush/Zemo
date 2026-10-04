@@ -69,13 +69,13 @@ fn save_settings(app: AppHandle, shared: State<Shared>, settings: Settings) {
         (screen_changed, autostart_changed)
     };
     if let Err(err) = settings::save(&settings) {
-        eprintln!("[coucou] could not save settings: {err}");
+        eprintln!("[zem] could not save settings: {err}");
     }
     if autostart_changed {
         let manager = app.autolaunch();
         let result = if settings.autostart { manager.enable() } else { manager.disable() };
         if let Err(err) = result {
-            eprintln!("[coucou] autostart: {err}");
+            eprintln!("[zem] autostart: {err}");
         }
     }
     if screen_changed {
@@ -422,12 +422,12 @@ pub fn run() {
             gate.set_active(true);
             island::spawn_cursor_poll(handle.clone(), gate.clone());
 
-            log::line(format!("--- Coucou {} started ---", env!("CARGO_PKG_VERSION")));
+            log::line(format!("--- Zem {} started ---", env!("CARGO_PKG_VERSION")));
             hooks::ensure_hook_exe(&handle);
             pipe::start(handle.clone());
             integrations::start(handle.clone());
             Ok(())
         })
         .run(tauri::generate_context!())
-        .expect("error while running Coucou");
+        .expect("error while running Zem");
 }
