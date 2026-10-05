@@ -7,8 +7,8 @@
       "rpm"
     ],
     "resources": {
-      "../target/release/zem-hook.exe": null,
-      "../target/release/zem-hook": "zem-hook"
+      "../target/release/zemo-hook.exe": null,
+      "../target/release/zemo-hook": "zemo-hook"
     },
     "linux": {
       "appimage": {
@@ -30,7 +30,7 @@
     "windows": [
       {
         "label": "island",
-        "title": "Zem",
+        "title": "Zemo",
         "url": "index.html",
         "width": 240,
         "height": 6,

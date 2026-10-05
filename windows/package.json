@@ -1,5 +1,5 @@
 {
-  "name": "zem-windows",
+  "name": "zemo-windows",
   "private": true,
   "version": "0.1.1",
   "type": "module",
@@ -10,7 +10,7 @@
     "icons": "node scripts/gen-icons.mjs",
     "tauri": "tauri",
     "pack": "tauri build && node scripts/pack.mjs",
-    "build:hook": "cargo build --release -p zem-hook"
+    "build:hook": "cargo build --release -p zemo-hook"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",

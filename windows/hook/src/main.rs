@@ -1,20 +1,20 @@
-//! zem-hook — the relay Claude Code runs on every hook event.
+//! zemo-hook — the relay Claude Code runs on every hook event.
 //!
 //! Reads the hook JSON on stdin, adds a little terminal context, and hands it to
-//! Zem over the named pipe `\\.\pipe\zem-<sid>` (Windows) or the Unix
-//! socket `$XDG_RUNTIME_DIR/zem.sock` (Linux).
+//! Zemo over the named pipe `\\.\pipe\zemo-<sid>` (Windows) or the Unix
+//! socket `$XDG_RUNTIME_DIR/zemo.sock` (Linux).
 //!
 //! Hard rule (docs/CLAUDE.md): **never block Claude Code.**
-//! * If the pipe does not exist — Zem is closed — we exit 0 immediately with
+//! * If the pipe does not exist — Zemo is closed — we exit 0 immediately with
 //!   nothing on stdout, and the session carries on untouched.
 //! * Every step runs under a deadline enforced by the main thread, so a pipe that
 //!   accepts the connection and then stops reading cannot wedge the session
 //!   either: we abandon the worker and exit.
 //! * Only `PermissionRequest` waits for an answer, because approving from the
 //!   island is the whole point. No answer means empty stdout, and Claude Code
-//!   asks in the terminal exactly as if Zem were not installed.
+//!   asks in the terminal exactly as if Zemo were not installed.
 //!
-//! Usage: `zem-hook <EventName>` (the name is also read from the JSON).
+//! Usage: `zemo-hook <EventName>` (the name is also read from the JSON).
 
 use std::io::{Read, Write};
 use std::sync::mpsc;
@@ -78,7 +78,7 @@ fn decision_json(decision: &str) -> Option<String> {
         // "always" still answers a plain allow; remembering it is the island's
         // business, not Claude Code's.
         "allow" | "always" => r#"{"behavior":"allow"}"#.to_string(),
-        "deny" => r#"{"behavior":"deny","message":"Denied from Zem"}"#.to_string(),
+        "deny" => r#"{"behavior":"deny","message":"Denied from Zemoo"}"#.to_string(),
         _ => return None,
     };
     Some(format!(
@@ -100,8 +100,8 @@ fn read_event() -> Option<(String, String)> {
     let mut payload = serde_json::from_slice::<serde_json::Value>(&raw).ok()?;
     let map = payload.as_object_mut()?;
 
-    // Parse argv: "zem-hook.exe [--agent <name>] [<EventName>]"
-    // --agent tags the payload with zem_agent so the app routes to the right pill.
+    // Parse argv: "zemo-hook.exe [--agent <name>] [<EventName>]"
+    // --agent tags the payload with zemo_agent so the app routes to the right pill.
     // Absent or invalid names are validated and discarded by the app, not here.
     let mut agent = String::new();
     let mut arg_event = String::new();
@@ -118,7 +118,7 @@ fn read_event() -> Option<(String, String)> {
     // Which agent this hook was installed for. Absent means Claude Code,
     // so existing hook commands keep working unchanged.
     if !agent.is_empty() {
-        map.insert("zem_agent".into(), serde_json::Value::String(agent));
+        map.insert("zemo_agent".into(), serde_json::Value::String(agent));
     }
     let event = map
         .get("hook_event_name")
@@ -146,7 +146,7 @@ fn read_event() -> Option<(String, String)> {
         }
     }
 
-    // Which terminal the session runs in. Unlike macOS, Zem here accepts
+    // Which terminal the session runs in. Unlike macOS, Zemo here accepts
     // events from every terminal, so this is context only — never a filter.
     for (key, var) in [
         ("term_program", "TERM_PROGRAM"),
@@ -231,7 +231,7 @@ mod tests {
         );
         assert_eq!(
             decision_json("deny").unwrap(),
-            r#"{"hookSpecificOutput":{"hookEventName":"PermissionRequest","decision":{"behavior":"deny","message":"Denied from Zem"}}}"#
+            r#"{"hookSpecificOutput":{"hookEventName":"PermissionRequest","decision":{"behavior":"deny","message":"Denied from Zemoo"}}}"#
         );
         // "always" is an island concept; Claude Code just gets an allow.
         assert!(decision_json("always").unwrap().contains(r#""behavior":"allow""#));

@@ -1,12 +1,12 @@
 [package]
-name = "zem-hook"
-description = "Relays Claude Code hook events to Zem over a named pipe (Windows) or a Unix socket (Linux)"
+name = "zemo-hook"
+description = "Relays Claude Code hook events to Zemo over a named pipe (Windows) or a Unix socket (Linux)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [[bin]]
-name = "zem-hook"
+name = "zemo-hook"
 path = "src/main.rs"
 
 [dependencies]

@@ -22,17 +22,17 @@ const PACKAGES = {
     {
       dir: "nsis",
       suffix: "-setup.exe",
-      names: [`Zem-Windows-${version}-setup.exe`, "Zem-Windows-setup.exe"],
+      names: [`Zemo-Windows-${version}-setup.exe`, "Zemo-Windows-setup.exe"],
     },
   ],
   linux: [
     {
       dir: "appimage",
       suffix: ".AppImage",
-      names: [`Zem-Linux-${version}-${arch}.AppImage`, `Zem-Linux-${arch}.AppImage`],
+      names: [`Zemo-Linux-${version}-${arch}.AppImage`, `Zemo-Linux-${arch}.AppImage`],
     },
-    { dir: "deb", suffix: ".deb", names: [`Zem-Linux-${version}-${debArch}.deb`] },
-    { dir: "rpm", suffix: ".rpm", names: [`Zem-Linux-${version}-${arch}.rpm`] },
+    { dir: "deb", suffix: ".deb", names: [`Zemo-Linux-${version}-${debArch}.deb`] },
+    { dir: "rpm", suffix: ".rpm", names: [`Zemo-Linux-${version}-${arch}.rpm`] },
   ],
 };
 

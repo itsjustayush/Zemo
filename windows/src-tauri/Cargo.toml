@@ -1,13 +1,13 @@
 [package]
-name = "zem"
-description = "Zem for Windows and Linux — Mochi lives at the top of your screen"
+name = "zemo"
+description = "Zemo for Windows and Linux — Mochi lives at the top of your screen"
 authors = ["Louis Raille"]
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [lib]
-name = "zem_lib"
+name = "zemo_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

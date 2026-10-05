@@ -1,6 +1,6 @@
 ; Uninstall hooks for the NSIS installer.
 ;
-; The app stages zem-hook.exe into %LOCALAPPDATA%\Coucou\bin at launch, so the
+; The app stages zemo-hook.exe into %LOCALAPPDATA%\Coucou\bin at launch, so the
 ; installer never recorded it and the default uninstaller leaves it behind. The
 ; inbox and the log live in the same place and are ours too.
 ;
@@ -11,7 +11,7 @@
 ; printing anything, so a leftover entry costs nothing beyond a dead path.
 
 !macro NSIS_HOOK_PREUNINSTALL
-  RMDir /r "$LOCALAPPDATA\Zem\bin"
-  RMDir /r "$LOCALAPPDATA\Zem\inbox"
-  Delete "$LOCALAPPDATA\Zem\zem.log"
+  RMDir /r "$LOCALAPPDATA\Zemo\bin"
+  RMDir /r "$LOCALAPPDATA\Zemo\inbox"
+  Delete "$LOCALAPPDATA\Zemo\zemo.log"
 !macroend

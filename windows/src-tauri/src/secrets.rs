@@ -3,7 +3,7 @@
 
 use keyring::Entry;
 
-const SERVICE: &str = "com.zem.desktop";
+const SERVICE: &str = "com.zemo.desktop";
 
 /// Every key Coucou may store. Anything outside this list is refused.
 pub const KNOWN_KEYS: &[&str] = &[
